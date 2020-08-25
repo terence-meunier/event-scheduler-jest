@@ -1,6 +1,7 @@
 # Tests unitaires JestJS
 
-Atelier d'écriture de tests unitaires en Node.js pour le module "Métiers du test" - Campus Numérique Annecy.
+Atelier d'écriture de tests unitaires en Node.js pour le module "Métiers du test" - Campus Numérique Valence.
+Basé sur le travail de Vincent Berthet
 
 ## Consignes
 
