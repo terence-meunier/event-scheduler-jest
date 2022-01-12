@@ -30,8 +30,12 @@ export default class EventService {
      * Get the first upcomming event
      * @return {null | Event}
      */
-    getFirstEvent() {
-        return null; //TODO
+    getFirstEvent() {        
+        let events = this._eventRepository.getAll();
+        let events_upcoming = events.filter(element => Date.now() < element.getStartTime());
+        if (events_upcoming.length == 0)
+            return null;
+        return events_upcoming[0];
     }
 
     /**
@@ -39,7 +43,21 @@ export default class EventService {
      * @return {null | Event}
      */
     getLastEvent() {
-        return null; //TODO
+        let events = this._eventRepository.getAll();                   
+        let events_upcoming = events.filter(element => Date.now() < element.getStartTime());
+        if (events_upcoming.length == 0)
+            return null;
+        return events_upcoming[events_upcoming.length-1]; 
+    }
+
+    /**
+     * Get the duration event
+     * @param {Date} startDate 
+     * @param {Date} endDate 
+     * @return {BigInteger} Duration in seconds
+     */
+    getDuration(startDate, endDate) {            
+            return (endDate.valueOf() - startDate.valueOf()) / 1000;
     }
 
     /**
@@ -47,7 +65,19 @@ export default class EventService {
      * @return {null | Event}
      */
     getLongestEvent() {
-        return null; //TODO
+        let events = this._eventRepository.getAll();
+        let events_duration = events.map(element => this.getDuration(element.getStartTime(), element.getEndTime()));
+        let duration = 0;
+        let index = null;        
+        for (let i=0;i<events_duration.length;i++) {
+            if (events_duration[i] > duration) {                
+                duration = events_duration[i];
+                index = i;            
+            }
+        }
+        if (index == null)
+            return null;
+        return events[index];
     }
 
     /**
